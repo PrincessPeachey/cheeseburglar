@@ -1,5 +1,6 @@
 require("splash")
 require("backstory")
+require("level1")
 
 --[[
 --Loads when the game is first started.
@@ -9,6 +10,20 @@ function love.load()
 	windowHeight = 600
 	windowWidth = 1000
 	
+	math.randomseed(os.time())
+	math.random()
+	math.random()
+	math.random()
+	
+	bun_top_x = math.random(0, windowWidth)
+	bun_top_y = math.random(0, windowHeight)
+	bun_bottom_x = math.random(0, windowWidth)
+	bun_bottom_y = math.random(0, windowHeight)
+	cheese_x = math.random(0, windowWidth)
+	cheese_y = math.random(0, windowHeight)
+	patty_x = math.random(0, windowWidth)
+	patty_y = math.random(0, windowHeight)
+	
 	success = love.window.setMode(windowWidth, windowHeight)
 	
 	player_speed = 100
@@ -16,7 +31,7 @@ function love.load()
 	
 	--player = love.graphics.newImage("/Artwork/sprite_player.png")
 	
-	gameState = "splashScreen"
+	gameState = "level1"
 	
 end
 
@@ -48,54 +63,29 @@ function love.update(dt)
 
 	-- If playing the backstory
 	if gameState == "backStory" then
+		backstory_animation(dt)
+	end
 	
-		if player_x < player_x_end then
-			
-			-- Move sprite across the screen
+	if gameState == "level1" then
+		
+		-- Move to the right
+		if love.keyboard.isDown("right") then
 			player_x = player_x + (player_speed * dt)
-			player_count = player_count + 1
-			
-				-- Flip the images
-				if walk1 == false and walk2 == true then
-					player_walk = player_walk2
-					walk2 = false
-				end
-			
-				if walk1 == true and walk2 == false then
-					player_walk = player_walk1
-					walk2 = true
-				end
-			
-				-- Rate at which images flip
-				if player_count % 15 == 0 then
-					if walk1 == false and walk2 == false then
-						walk1 = true
-					end
-			
-					if walk1 == true and walk2 == true then
-						walk1 = false
-					end
-				end
-	
 		end
+		-- Move to the left
+		if love.keyboard.isDown("left") then
+			player_x = player_x - (player_speed * dt)
+		end
+		-- Move upwards
+		if love.keyboard.isDown("up") then
+			player_y = player_y - (player_speed * dt)
+		end
+		-- Move downwards
+		if love.keyboard.isDown("down") then
+			player_y = player_y + (player_speed * dt)
+		end
+
 		
-		-- Stand still.
-		if player_x + 0.5 >= player_x_end then
-			player_walk = player_right
-		end
-		
-		if player_walk == player_right then
-			worker_text = "Cynthia: Hey! Thank goodness you're here!"
-			text_timer = text_timer - dt
-		end
-		
-		if text_timer < 3.5 then
-			worker_text = "Cynthia: All of our burger ingredients have been stolen!"
-		end
-		
-		if text_timer < 0.5 then
-			worker_text = "Cynthia: We need to get them all back before we can go home tonight!"
-		end
 		
 	end
 
@@ -144,7 +134,9 @@ function love.draw()
 		
 	end
 	
-	
+	if gameState == "level1" then
+		level1()
+	end
 	
 	
 	
