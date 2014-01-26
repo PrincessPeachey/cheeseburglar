@@ -31,7 +31,7 @@ function love.load()
 	
 	--player = love.graphics.newImage("/Artwork/sprite_player.png")
 	
-	gameState = "level1"
+	gameState = "splashScreen"
 	
 end
 
@@ -85,6 +85,19 @@ function love.update(dt)
 			player_y = player_y + (player_speed * dt)
 		end
 
+		
+		bun_top_x = bun_top_x + math.random(-10,10)
+		bun_top_y = bun_top_y + math.random(-10,10)
+		bun_bottom_x = bun_bottom_x + math.random(-10,10)
+		bun_bottom_y = bun_bottom_y + math.random(-10,10)
+		cheese_x = cheese_x + math.random(-10,10)
+		cheese_y = cheese_y + math.random(-10,10)
+		patty_x = patty_x + math.random(-10,10)
+		patty_y = patty_y + math.random(-10,10)
+		
+		
+		
+		
 		
 		
 	end
