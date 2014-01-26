@@ -79,10 +79,23 @@ function love.update(dt)
 	
 		end
 		
+		-- Stand still.
 		if player_x + 0.5 >= player_x_end then
 			player_walk = player_right
 		end
 		
+		if player_walk == player_right then
+			worker_text = "Cynthia: Hey! Thank goodness you're here!"
+			text_timer = text_timer - dt
+		end
+		
+		if text_timer < 3.5 then
+			worker_text = "Cynthia: All of our burger ingredients have been stolen!"
+		end
+		
+		if text_timer < 0.5 then
+			worker_text = "Cynthia: We need to get them all back before we can go home tonight!"
+		end
 		
 	end
 
